@@ -1,0 +1,62 @@
+<div class="example-container">
+    <mat-toolbar class="example-toolbar">
+        <button mat-icon-button (click)="sidenav.toggle()">
+            @if (!sidenav.opened) {
+                <mat-icon>menu</mat-icon>
+            }@else {
+                <mat-icon>close</mat-icon>
+            }
+        </button>
+        <span>HOTEL RESERVAS</span>
+        <span class="example-spacer"></span>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+                <mat-icon>account_box</mat-icon>
+                <span>Mi cuenta</span>
+            </button>
+            <button mat-menu-item>
+                <mat-icon>exit_to_app</mat-icon>
+                <span>Salir</span>
+            </button>
+        </mat-menu>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="example-sidenav-container">
+        <mat-sidenav #sidenav style="width: 250px" mode="side" opened>
+
+            <mat-divider></mat-divider>
+            <button class="myButton" [routerLinkActive]="['active']" mat-menu-item
+                routerLink="/pages/tipo-habitacion">
+                <mat-icon>category</mat-icon>
+                <span>Tipos de Habitación</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button class="myButton" [routerLinkActive]="['active']" mat-menu-item
+                routerLink="/pages/habitacion">
+                <mat-icon>bed</mat-icon>
+                <span>Habitaciones</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button class="myButton" [routerLinkActive]="['active']" mat-menu-item
+                routerLink="/pages/huesped">
+                <mat-icon>person</mat-icon>
+                <span>Huéspedes</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button class="myButton" [routerLinkActive]="['active']" mat-menu-item
+                routerLink="/pages/reserva">
+                <mat-icon>book_online</mat-icon>
+                <span>Reservas</span>
+            </button>
+            <mat-divider></mat-divider>
+
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

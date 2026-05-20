@@ -1,0 +1,55 @@
+<form [formGroup]="$form()" (submit)="operate()" class="example-container" #frm="ngForm">
+
+  <div [hidden]="true">
+    <mat-form-field><input matInput formControlName="id"></mat-form-field>
+  </div>
+
+  <mat-form-field>
+    <mat-label>Número de Habitación</mat-label>
+    <input matInput formControlName="numero" placeholder="Ej: 101">
+    @if ($f()['numero'].errors?.['required'] && $f()['numero'].touched) {
+      <small class="invalid">El número es requerido</small>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Tipo de Habitación</mat-label>
+    <mat-select formControlName="tipoHabitacion" [compareWith]="compareTipo">
+      @for (tipo of $tipos(); track tipo.id) {
+        <mat-option [value]="tipo">{{tipo.nombre}}</mat-option>
+      }
+    </mat-select>
+    @if ($f()['tipoHabitacion'].errors?.['required'] && $f()['tipoHabitacion'].touched) {
+      <small class="invalid">El tipo es requerido</small>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Precio por Noche (S/.)</mat-label>
+    <input matInput formControlName="precioPorNoche" type="number">
+    @if ($f()['precioPorNoche'].errors?.['required'] && $f()['precioPorNoche'].touched) {
+      <small class="invalid">El precio es requerido</small>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Capacidad (personas)</mat-label>
+    <input matInput formControlName="capacidad" type="number">
+    @if ($f()['capacidad'].errors?.['required'] && $f()['capacidad'].touched) {
+      <small class="invalid">La capacidad es requerida</small>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Servicios</mat-label>
+    <input matInput formControlName="servicios" placeholder="Wifi, TV, Jacuzzi...">
+  </mat-form-field>
+
+  <button mat-flat-button type="submit" [disabled]="frm.invalid">
+    <mat-icon>done</mat-icon> Guardar
+  </button>
+  <button mat-flat-button type="button" class="cancel-button" routerLink="/pages/habitacion">
+    <mat-icon>cancel</mat-icon> Cancelar
+  </button>
+
+</form>

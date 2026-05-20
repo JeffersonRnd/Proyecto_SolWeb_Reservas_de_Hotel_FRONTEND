@@ -1,0 +1,30 @@
+<form [formGroup]="$form()" (submit)="operate()" class="example-container" #frm="ngForm">
+
+  <div [hidden]="true">
+    <mat-form-field><input matInput formControlName="id"></mat-form-field>
+  </div>
+
+  <mat-form-field>
+    <mat-label>Nombre</mat-label>
+    <input matInput placeholder="Ej: Suite" formControlName="nombre">
+    @if ($f()['nombre'].errors?.['required'] && $f()['nombre'].touched) {
+      <small class="invalid">El nombre es requerido</small>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Descripción</mat-label>
+    <input matInput placeholder="Descripción del tipo" formControlName="descripcion">
+    @if ($f()['descripcion'].errors?.['required'] && $f()['descripcion'].touched) {
+      <small class="invalid">La descripción es requerida</small>
+    }
+  </mat-form-field>
+
+  <button mat-flat-button type="submit" [disabled]="frm.invalid">
+    <mat-icon>done</mat-icon> Guardar
+  </button>
+  <button mat-flat-button type="button" class="cancel-button" routerLink="/pages/tipo-habitacion">
+    <mat-icon>cancel</mat-icon> Cancelar
+  </button>
+
+</form>

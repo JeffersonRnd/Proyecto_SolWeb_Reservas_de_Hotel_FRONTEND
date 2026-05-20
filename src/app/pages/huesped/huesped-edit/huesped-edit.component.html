@@ -1,0 +1,62 @@
+<form [formGroup]="$form()" (submit)="operate()" class="example-container" #frm="ngForm">
+
+  <div [hidden]="true">
+    <mat-form-field><input matInput formControlName="id"></mat-form-field>
+  </div>
+
+  <mat-form-field>
+    <mat-label>Nombre</mat-label>
+    <input matInput formControlName="nombre">
+    @if ($f()['nombre'].errors?.['required'] && $f()['nombre'].touched) {
+      <small class="invalid">El nombre es requerido</small>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Apellido</mat-label>
+    <input matInput formControlName="apellido">
+    @if ($f()['apellido'].errors?.['required'] && $f()['apellido'].touched) {
+      <small class="invalid">El apellido es requerido</small>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>DNI</mat-label>
+    <input matInput formControlName="dni" maxlength="8">
+    @if ($f()['dni'].errors?.['required'] && $f()['dni'].touched) {
+      <small class="invalid">El DNI es requerido</small>
+    }
+    @if ($f()['dni'].errors?.['minlength'] && $f()['dni'].touched) {
+      <small class="invalid">El DNI debe tener 8 dígitos</small>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Correo</mat-label>
+    <input matInput formControlName="correo" type="email">
+    @if ($f()['correo'].errors?.['required'] && $f()['correo'].touched) {
+      <small class="invalid">El correo es requerido</small>
+    }
+    @if ($f()['correo'].errors?.['email'] && $f()['correo'].touched) {
+      <small class="invalid">Ingrese un correo válido</small>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Teléfono</mat-label>
+    <input matInput formControlName="telefono">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Dirección</mat-label>
+    <input matInput formControlName="direccion">
+  </mat-form-field>
+
+  <button mat-flat-button type="submit" [disabled]="frm.invalid">
+    <mat-icon>done</mat-icon> Guardar
+  </button>
+  <button mat-flat-button type="button" class="cancel-button" routerLink="/pages/huesped">
+    <mat-icon>cancel</mat-icon> Cancelar
+  </button>
+
+</form>

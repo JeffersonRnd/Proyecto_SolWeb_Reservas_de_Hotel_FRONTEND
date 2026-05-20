@@ -1,0 +1,58 @@
+<mat-dialog-content>
+  <mat-toolbar>
+    <span>{{ $isEdit() ? 'Editar Reserva' : 'Nueva Reserva' }}</span>
+  </mat-toolbar>
+
+  <form [formGroup]="$form()" (submit)="operate()" class="example-container">
+
+    <mat-form-field>
+      <mat-label>Huésped</mat-label>
+      <mat-select formControlName="huesped" [compareWith]="compareHuesped">
+        @for (h of $huespedes(); track h.id) {
+          <mat-option [value]="h">{{h.nombre}} {{h.apellido}} - {{h.dni}}</mat-option>
+        }
+      </mat-select>
+      @if ($f()['huesped'].errors?.['required'] && $f()['huesped'].touched) {
+        <small class="invalid">Seleccione un huésped</small>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Fecha de Ingreso</mat-label>
+      <input matInput type="date" formControlName="fechaIngreso">
+      @if ($f()['fechaIngreso'].errors?.['required'] && $f()['fechaIngreso'].touched) {
+        <small class="invalid">La fecha de ingreso es requerida</small>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Fecha de Salida</mat-label>
+      <input matInput type="date" formControlName="fechaSalida">
+      @if ($f()['fechaSalida'].errors?.['required'] && $f()['fechaSalida'].touched) {
+        <small class="invalid">La fecha de salida es requerida</small>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="estado">
+        @for (e of estados; track e) {
+          <mat-option [value]="e">{{e}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Observaciones</mat-label>
+      <input matInput formControlName="observaciones">
+    </mat-form-field>
+
+    <button mat-flat-button type="submit" [disabled]="$form().invalid">
+      <mat-icon>done</mat-icon> Guardar
+    </button>
+    <button mat-flat-button type="button" class="cancel-button" (click)="close()">
+      <mat-icon>cancel</mat-icon> Cancelar
+    </button>
+
+  </form>
+</mat-dialog-content>

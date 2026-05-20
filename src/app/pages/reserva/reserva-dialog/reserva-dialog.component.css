@@ -1,0 +1,3 @@
+.example-container { display: flex; flex-direction: column; gap: 8px; padding: 16px 0; }
+.example-container > * { width: 100%; }
+.invalid { color: red; font-size: 12px; }
