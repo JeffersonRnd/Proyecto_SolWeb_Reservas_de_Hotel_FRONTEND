@@ -1,99 +1,52 @@
-# Frontend para Aplicación de Alquileres
+# 🏨 Reservas Hotel Frontend
+Aplicación frontend para la gestión de reservas de hotel, desarrollada con *Angular 21* y *TypeScript*.
+---
+## 📋 Requisitos previos
+Antes de ejecutar el proyecto, asegúrate de tener instalado:
+- [Node.js](https://nodejs.org/) v18 o superior (recomendado: v24.x)
+- [npm](https://www.npmjs.com/) v9 o superior
+- [Angular CLI](https://angular.dev/tools/cli) v21
+Puedes verificar tus versiones con:
+bash
+node -v
+npm -v
+ng version
 
-Este proyecto ha sido generado usando [Angular CLI](https://github.com/angular/angular-cli) version 21.2.5.
-
-Este proyecto es desarrollado como parte del curso Soluciones Web y Aplicaciones Distribuidas con NRC 5206, correspondiente al período UPN 2026-1
-
-## A considerar
-
-Cuando clone el proyecto, para que la aplicación descargue las devependencias, desde la línea de comandos navegue a la línea de comandos y ejecute:
-
-```bash
+---
+## ⚙️ Instalación
+1. Descarga el proyecto y descomprímelo en la carpeta deseada.
+2. Abre la carpeta del proyecto y en tu terminal mediante el siguiente comando instala las dependencias:
+bash
 npm install
-```
 
-Se ha deshabilitado el modo estricto de typescript en el archivo `tsconfig.json`
-```bash
-"strict": false,
-```
-
-Y para un comportamiento según versiones de angular anteriores se agregó en `angular.json` la siguiente configuración:
-
-```bash
-    "schematics": {
-        "@schematics/angular:component": { "type": "component" },
-        "@schematics/angular:service": { "type": "service" },
-        "@schematics/angular:pipe": { "typeSeparator": "." },
-        "@schematics/angular:module": { "typeSeparator": "." }
-      }
-```
-
-## Development server
-
-Para iniciar un servidor local de desarrollo, ejecuta:
-
-```bash
+---
+## ▶️ Ejecución en desarrollo
+Para iniciar el servidor, en la misma terminal ejecuta:
+bash
 ng serve
-```
 
-Una vez que el servidor esté en funcionamiento, abre tu navegador y accede a `http://localhost:4200/`. La aplicación se recargará automáticamente cada vez que modifiques alguno de los archivos fuente.
+Luego abre el navegador en: [http://localhost:4200](http://localhost:4200)
+La aplicación se recargará automáticamente al detectar cambios en los archivos fuente.
 
-## Code scaffolding
+---
 
-Angular CLI incluye potentes herramientas para la generación de código. 
-Para generar un nuevo componente, ejecute:
-
-```bash
-ng generate component component-name
-```
-
-Para generar un nuevo servicio ejecute:
-
-```bash
-ng generate service service-name
-```
-
-Para generar los archivos para configurar las variables de entorno:
-
-```bash
-ng generate environments
-```
+## 🗂️ Archivos creados
 
 
-Para obtener una lista completa de los esquemas disponibles (como `components`, `directives`, or `pipes`), ejecute:
+src/app/model/          → reserva, detalle-reserva, habitacion, huesped, tipo-habitacion
+src/app/services/       → generic, generic-signal, habitacion, huesped, reserva, tipo-habitacion
+src/app/pages/          → layout, habitacion, huesped, reserva, tipo-habitacion (cada uno con su componente de edición)
+src/environments/       → environment.ts, environment.development.ts
+src/material-theme.scss
 
-```bash
-ng generate --help
-```
 
-## Building
+---
 
-Para compilar el proyecto, ejecute:
+## 📦 Dependencias adicionales
 
-```bash
-ng build
-```
+Además de las dependencias base de Angular, este proyecto incluye:
 
-Esto compilará tu proyecto y almacenará los archivos generados en el directorio `dist/`. Por defecto, la compilación de producción optimiza tu aplicación para mejorar el rendimiento y la velocidad.
-
-## Running unit tests
-
-Para ejecutar pruebas unitarias con el ejecutor de pruebas [Vitest](https://vitest.dev/), utilice el siguiente comando:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-Para realizar pruebas de end-to-end(e2e), ejecute:
-
-```bash
-ng e2e
-```
-
-Angular CLI no incluye un marco de pruebas integral por defecto. Puedes elegir el que mejor se adapte a tus necesidades.
-
-## Additional Resources
-
-Para obtener más información sobre el uso de Angular CLI, incluidas referencias detalladas de comandos, visite la página [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli).
+- [@angular/material](https://material.angular.io/) v21 — Componentes UI de Material Design
+- [@angular/cdk](https://material.angular.io/cdk/categories) v21 — Kit de desarrollo de componentes
+- [prettier](https://prettier.io/) — Formateador de código
+- [vitest](https://vitest.dev/) — Framework de testing
