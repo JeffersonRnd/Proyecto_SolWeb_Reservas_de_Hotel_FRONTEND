@@ -1,0 +1,36 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="login-header">
+      <mat-icon class="hotel-icon">hotel</mat-icon>
+      <h1>Hotel Reservas</h1>
+      <p>Bienvenido, ingresa tus credenciales</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Usuario</mat-label>
+        <input matInput formControlName="username" autocomplete="username"/>
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input matInput formControlName="password"
+          [type]="hidePassword ? 'password' : 'text'"
+          autocomplete="current-password"/>
+        <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" class="full-width btn-login"
+        type="submit" [disabled]="form.invalid || loading">
+        <mat-icon>login</mat-icon>
+        {{ loading ? 'Ingresando...' : 'Iniciar sesión' }}
+      </button>
+    </form>
+
+    <mat-divider style="margin: 20px 0"></mat-divider>
+    <p class="register-hint">¿No tienes cuenta? <a routerLink="/register">Regístrate aquí</a></p>
+  </div>
+</div>
