@@ -1,9 +1,9 @@
-import { Huesped } from './huesped';
 import { DetalleReserva } from './detalle-reserva';
 
 export class Reserva {
     id: number;
-    huesped: Huesped;
+    huespedNombre: string;
+    huespedDni: string;
     fechaIngreso: string;
     fechaSalida: string;
     totalPagar: number;
