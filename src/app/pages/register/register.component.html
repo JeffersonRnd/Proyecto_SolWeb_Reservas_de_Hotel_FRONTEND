@@ -1,0 +1,51 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="login-header">
+      <mat-icon class="hotel-icon">app_registration</mat-icon>
+      <h1>Crear cuenta</h1>
+      <p>Completa tus datos para registrarte</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Usuario</mat-label>
+        <input matInput formControlName="username"/>
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email"/>
+        <mat-icon matSuffix>email</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input matInput formControlName="password"
+          [type]="hidePassword ? 'password' : 'text'"/>
+        <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-hint>Mínimo 6 caracteres</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Tipo de cuenta</mat-label>
+        <mat-select formControlName="rol">
+          <mat-option value="HUESPED">Huésped</mat-option>
+          <mat-option value="ADMIN">Administrador</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>badge</mat-icon>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" class="full-width btn-login"
+        type="submit" [disabled]="form.invalid || loading">
+        <mat-icon>how_to_reg</mat-icon>
+        {{ loading ? 'Registrando...' : 'Crear cuenta' }}
+      </button>
+    </form>
+
+    <mat-divider style="margin: 20px 0"></mat-divider>
+    <p class="register-hint">¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a></p>
+  </div>
+</div>
