@@ -1,0 +1,22 @@
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a237e 0%, #0288d1 100%);
+}
+.login-card {
+  background: white;
+  border-radius: 16px;
+  padding: 40px 36px;
+  width: 400px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+.login-header { text-align: center; margin-bottom: 24px; }
+.hotel-icon { font-size: 48px; width: 48px; height: 48px; color: #0288d1; }
+.login-header h1 { margin: 8px 0 4px; font-size: 24px; color: #1a237e; }
+.login-header p { color: #666; margin: 0; font-size: 14px; }
+.full-width { width: 100%; margin-bottom: 4px; }
+.btn-login { margin-top: 8px; height: 46px; font-size: 15px; }
+.register-hint { text-align: center; color: #666; font-size: 13px; margin: 0; }
+.register-hint a { color: #0288d1; text-decoration: none; font-weight: 500; }
