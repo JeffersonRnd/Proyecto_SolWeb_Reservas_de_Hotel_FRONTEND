@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HabitacionService } from '../../../services/habitacion.service';
 import { TipoHabitacionService } from '../../../services/tipo-habitacion.service';
@@ -14,7 +15,11 @@ import { switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-habitacion-edit',
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, RouterLink, MatSelectModule],
+  imports: [
+    ReactiveFormsModule, MatFormFieldModule, MatInputModule,
+    MatButtonModule, MatIconModule, RouterLink,
+    MatSelectModule, MatSlideToggleModule
+  ],
   templateUrl: './habitacion-edit.component.html',
   styleUrl: './habitacion-edit.component.css'
 })
@@ -44,7 +49,10 @@ export class HabitacionEditComponent {
   constructor() {
     effect(() => {
       const id = this.$id();
-      if (id) this.service.findById(id).subscribe(data => this.$form().patchValue(data));
+      if (id) this.service.findById(id).subscribe((data: any) => {
+        const tipo = this.$tipos().find((t: any) => t.nombre === data.tipoHabitacionNombre) ?? null;
+        this.$form().patchValue({ ...data, tipoHabitacion: tipo });
+      });
     });
   }
 
@@ -55,13 +63,18 @@ export class HabitacionEditComponent {
   operate() {
     const form = this.$form();
     if (form.invalid) return;
-    const obj: Habitacion = form.value as Habitacion;
+    const val = form.value;
+    const obj: any = {
+      ...val,
+      tipoHabitacionId: val.tipoHabitacion?.id
+    };
+    delete obj.tipoHabitacion;
     const isEdit = this.$isEdit();
     const op$ = isEdit ? this.service.update(this.$id(), obj) : this.service.save(obj);
     op$.pipe(
       switchMap(() => this.service.findAll()),
       tap(data => this.service.setListChange(data)),
-      tap(() => this.service.setMessageChange(isEdit ? 'ACTUALIZADO' : 'CREADO'))
+      tap(() => this.service.setMessageChange(isEdit ? 'Habitación actualizada' : 'Habitación creada'))
     ).subscribe(() => this.router.navigate(['/pages/habitacion']));
   }
 }

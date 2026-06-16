@@ -8,6 +8,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { switchMap, tap } from 'rxjs';
@@ -17,7 +18,7 @@ import { switchMap, tap } from 'rxjs';
   imports: [
     MatTableModule, MatFormFieldModule, MatInputModule,
     MatPaginatorModule, MatSortModule, MatButtonModule,
-    MatIconModule, RouterLink, RouterOutlet, MatSnackBarModule
+    MatIconModule, MatTooltipModule, RouterLink, RouterOutlet, MatSnackBarModule
   ],
   templateUrl: './tipo-habitacion.component.html',
   styleUrl: './tipo-habitacion.component.css'
@@ -37,8 +38,8 @@ export class TipoHabitacionComponent {
     effect(() => {
       const ds = this.$dataSource();
       ds.data = this.$list();
-      ds.paginator = this.$paginator();
-      ds.sort = this.$sort();
+      ds.paginator = this.$paginator() ?? null;
+      ds.sort = this.$sort() ?? null;
     });
     effect(() => {
       const msg = this.service.$messageChange();
@@ -54,11 +55,11 @@ export class TipoHabitacionComponent {
   }
 
   delete(id: number) {
-    if (window.confirm('¿Está seguro de eliminar?')) {
+    if (window.confirm('¿Eliminar este tipo de habitación?')) {
       this.service.delete(id).pipe(
         switchMap(() => this.service.findAll()),
         tap(data => this.service.setListChange(data)),
-        tap(() => this.service.setMessageChange('ELIMINADO'))
+        tap(() => this.service.setMessageChange('Tipo eliminado correctamente'))
       ).subscribe();
     }
   }

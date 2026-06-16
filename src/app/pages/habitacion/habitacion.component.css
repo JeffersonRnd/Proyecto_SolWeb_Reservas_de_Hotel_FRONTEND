@@ -1,1 +1,14 @@
+.page-container { padding: 24px; }
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.page-title { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 22px; color: #1a237e; }
+.page-subtitle { color: #888; margin: 4px 0 0; font-size: 13px; }
+.search-field { width: 100%; margin-bottom: 16px; }
+.table-card { border-radius: 10px; overflow: hidden; }
 table { width: 100%; }
+.table-row:hover { background: #f0f4ff; }
+.no-data { padding: 32px; text-align: center; color: #999; }
+th.mat-header-cell { color: #1a237e; font-weight: 600; font-size: 13px; }
+.precio-cell { color: #2e7d32; font-weight: 600; }
+.badge { padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+.badge-yes { background: #e8f5e9; color: #2e7d32; }
+.badge-no  { background: #fce4ec; color: #c62828; }

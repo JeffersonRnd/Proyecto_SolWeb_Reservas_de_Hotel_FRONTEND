@@ -1,55 +1,78 @@
-<form [formGroup]="$form()" (submit)="operate()" class="example-container" #frm="ngForm">
-
-  <div [hidden]="true">
-    <mat-form-field><input matInput formControlName="id"></mat-form-field>
+<div class="edit-container">
+  <div class="edit-header">
+    <h2 class="page-title">
+      <mat-icon>{{ $isEdit() ? 'edit' : 'add_circle' }}</mat-icon>
+      {{ $isEdit() ? 'Editar Habitación' : 'Nueva Habitación' }}
+    </h2>
   </div>
 
-  <mat-form-field>
-    <mat-label>Número de Habitación</mat-label>
-    <input matInput formControlName="numero" placeholder="Ej: 101">
-    @if ($f()['numero'].errors?.['required'] && $f()['numero'].touched) {
-      <small class="invalid">El número es requerido</small>
-    }
-  </mat-form-field>
+  <form [formGroup]="$form()" (submit)="operate()" class="edit-form" #frm="ngForm">
+    <div [hidden]="true">
+      <input formControlName="id">
+    </div>
 
-  <mat-form-field>
-    <mat-label>Tipo de Habitación</mat-label>
-    <mat-select formControlName="tipoHabitacion" [compareWith]="compareTipo">
-      @for (tipo of $tipos(); track tipo.id) {
-        <mat-option [value]="tipo">{{tipo.nombre}}</mat-option>
-      }
-    </mat-select>
-    @if ($f()['tipoHabitacion'].errors?.['required'] && $f()['tipoHabitacion'].touched) {
-      <small class="invalid">El tipo es requerido</small>
-    }
-  </mat-form-field>
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Número de Habitación</mat-label>
+        <input matInput formControlName="numero" placeholder="Ej: 101">
+        <mat-icon matSuffix>tag</mat-icon>
+        @if ($f()['numero'].errors?.['required'] && $f()['numero'].touched) {
+          <mat-error>El número es requerido</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Precio por Noche (S/.)</mat-label>
-    <input matInput formControlName="precioPorNoche" type="number">
-    @if ($f()['precioPorNoche'].errors?.['required'] && $f()['precioPorNoche'].touched) {
-      <small class="invalid">El precio es requerido</small>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Tipo de Habitación</mat-label>
+        <mat-select formControlName="tipoHabitacion" [compareWith]="compareTipo">
+          @for (tipo of $tipos(); track tipo.id) {
+            <mat-option [value]="tipo">{{tipo.nombre}}</mat-option>
+          }
+        </mat-select>
+        @if ($f()['tipoHabitacion'].errors?.['required'] && $f()['tipoHabitacion'].touched) {
+          <mat-error>El tipo es requerido</mat-error>
+        }
+      </mat-form-field>
+    </div>
 
-  <mat-form-field>
-    <mat-label>Capacidad (personas)</mat-label>
-    <input matInput formControlName="capacidad" type="number">
-    @if ($f()['capacidad'].errors?.['required'] && $f()['capacidad'].touched) {
-      <small class="invalid">La capacidad es requerida</small>
-    }
-  </mat-form-field>
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Precio por Noche (S/.)</mat-label>
+        <input matInput formControlName="precioPorNoche" type="number">
+        <mat-icon matSuffix>attach_money</mat-icon>
+        @if ($f()['precioPorNoche'].errors?.['required'] && $f()['precioPorNoche'].touched) {
+          <mat-error>El precio es requerido</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Servicios</mat-label>
-    <input matInput formControlName="servicios" placeholder="Wifi, TV, Jacuzzi...">
-  </mat-form-field>
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Capacidad (personas)</mat-label>
+        <input matInput formControlName="capacidad" type="number">
+        <mat-icon matSuffix>people</mat-icon>
+        @if ($f()['capacidad'].errors?.['required'] && $f()['capacidad'].touched) {
+          <mat-error>La capacidad es requerida</mat-error>
+        }
+      </mat-form-field>
+    </div>
 
-  <button mat-flat-button type="submit" [disabled]="frm.invalid">
-    <mat-icon>done</mat-icon> Guardar
-  </button>
-  <button mat-flat-button type="button" class="cancel-button" routerLink="/pages/habitacion">
-    <mat-icon>cancel</mat-icon> Cancelar
-  </button>
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Servicios</mat-label>
+      <input matInput formControlName="servicios" placeholder="Wifi, TV, Jacuzzi...">
+      <mat-icon matSuffix>room_service</mat-icon>
+    </mat-form-field>
 
-</form>
+    <div class="disponible-row">
+      <mat-slide-toggle formControlName="disponible" color="primary">
+        Habitación disponible
+      </mat-slide-toggle>
+    </div>
+
+    <div class="btn-row">
+      <button mat-raised-button color="primary" type="submit" [disabled]="frm.invalid">
+        <mat-icon>save</mat-icon> Guardar
+      </button>
+      <button mat-stroked-button type="button" routerLink="/pages/habitacion">
+        <mat-icon>arrow_back</mat-icon> Cancelar
+      </button>
+    </div>
+  </form>
+</div>

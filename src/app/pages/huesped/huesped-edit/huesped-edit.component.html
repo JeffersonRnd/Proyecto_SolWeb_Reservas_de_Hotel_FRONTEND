@@ -1,62 +1,76 @@
-<form [formGroup]="$form()" (submit)="operate()" class="example-container" #frm="ngForm">
-
-  <div [hidden]="true">
-    <mat-form-field><input matInput formControlName="id"></mat-form-field>
+<div class="edit-container">
+  <div class="edit-header">
+    <h2 class="page-title">
+      <mat-icon>{{ $isEdit() ? 'edit' : 'person_add' }}</mat-icon>
+      {{ $isEdit() ? 'Editar Huésped' : 'Nuevo Huésped' }}
+    </h2>
   </div>
 
-  <mat-form-field>
-    <mat-label>Nombre</mat-label>
-    <input matInput formControlName="nombre">
-    @if ($f()['nombre'].errors?.['required'] && $f()['nombre'].touched) {
-      <small class="invalid">El nombre es requerido</small>
-    }
-  </mat-form-field>
+  <form [formGroup]="$form()" (submit)="operate()" class="edit-form" #frm="ngForm">
+    <div [hidden]="true"><input formControlName="id"></div>
 
-  <mat-form-field>
-    <mat-label>Apellido</mat-label>
-    <input matInput formControlName="apellido">
-    @if ($f()['apellido'].errors?.['required'] && $f()['apellido'].touched) {
-      <small class="invalid">El apellido es requerido</small>
-    }
-  </mat-form-field>
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre">
+        <mat-icon matSuffix>person</mat-icon>
+        @if ($f()['nombre'].errors?.['required'] && $f()['nombre'].touched) {
+          <mat-error>Requerido</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>DNI</mat-label>
-    <input matInput formControlName="dni" maxlength="8">
-    @if ($f()['dni'].errors?.['required'] && $f()['dni'].touched) {
-      <small class="invalid">El DNI es requerido</small>
-    }
-    @if ($f()['dni'].errors?.['minlength'] && $f()['dni'].touched) {
-      <small class="invalid">El DNI debe tener 8 dígitos</small>
-    }
-  </mat-form-field>
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Apellido</mat-label>
+        <input matInput formControlName="apellido">
+        <mat-icon matSuffix>person_outline</mat-icon>
+        @if ($f()['apellido'].errors?.['required'] && $f()['apellido'].touched) {
+          <mat-error>Requerido</mat-error>
+        }
+      </mat-form-field>
+    </div>
 
-  <mat-form-field>
-    <mat-label>Correo</mat-label>
-    <input matInput formControlName="correo" type="email">
-    @if ($f()['correo'].errors?.['required'] && $f()['correo'].touched) {
-      <small class="invalid">El correo es requerido</small>
-    }
-    @if ($f()['correo'].errors?.['email'] && $f()['correo'].touched) {
-      <small class="invalid">Ingrese un correo válido</small>
-    }
-  </mat-form-field>
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>DNI</mat-label>
+        <input matInput formControlName="dni" maxlength="8">
+        <mat-icon matSuffix>badge</mat-icon>
+        @if ($f()['dni'].errors?.['required'] && $f()['dni'].touched) {
+          <mat-error>Requerido</mat-error>
+        }
+        @if ($f()['dni'].errors?.['minlength'] && $f()['dni'].touched) {
+          <mat-error>Debe tener 8 dígitos</mat-error>
+        }
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Teléfono</mat-label>
-    <input matInput formControlName="telefono">
-  </mat-form-field>
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="telefono">
+        <mat-icon matSuffix>phone</mat-icon>
+      </mat-form-field>
+    </div>
 
-  <mat-form-field>
-    <mat-label>Dirección</mat-label>
-    <input matInput formControlName="direccion">
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Correo</mat-label>
+      <input matInput formControlName="correo" type="email">
+      <mat-icon matSuffix>email</mat-icon>
+      @if ($f()['correo'].errors?.['email'] && $f()['correo'].touched) {
+        <mat-error>Correo inválido</mat-error>
+      }
+    </mat-form-field>
 
-  <button mat-flat-button type="submit" [disabled]="frm.invalid">
-    <mat-icon>done</mat-icon> Guardar
-  </button>
-  <button mat-flat-button type="button" class="cancel-button" routerLink="/pages/huesped">
-    <mat-icon>cancel</mat-icon> Cancelar
-  </button>
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Dirección</mat-label>
+      <input matInput formControlName="direccion">
+      <mat-icon matSuffix>home</mat-icon>
+    </mat-form-field>
 
-</form>
+    <div class="btn-row">
+      <button mat-raised-button color="primary" type="submit" [disabled]="frm.invalid">
+        <mat-icon>save</mat-icon> Guardar
+      </button>
+      <button mat-stroked-button type="button" routerLink="/pages/huesped">
+        <mat-icon>arrow_back</mat-icon> Cancelar
+      </button>
+    </div>
+  </form>
+</div>

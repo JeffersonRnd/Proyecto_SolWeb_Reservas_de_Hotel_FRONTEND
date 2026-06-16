@@ -1,58 +1,90 @@
+<div class="dialog-header">
+  <mat-icon>{{ $isEdit() ? 'edit_calendar' : 'book_online' }}</mat-icon>
+  <h2>{{ $isEdit() ? 'Editar Reserva' : 'Nueva Reserva' }}</h2>
+</div>
+
 <mat-dialog-content>
-  <mat-toolbar>
-    <span>{{ $isEdit() ? 'Editar Reserva' : 'Nueva Reserva' }}</span>
-  </mat-toolbar>
+  <form [formGroup]="$form()" class="dialog-form">
 
-  <form [formGroup]="$form()" (submit)="operate()" class="example-container">
+    @if (isAdmin()) {
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Huésped</mat-label>
+        <mat-select formControlName="huesped" [compareWith]="compareObj">
+          @for (h of $huespedes(); track h.id) {
+            <mat-option [value]="h">{{h.nombre}} {{h.apellido}} — {{h.dni}}</mat-option>
+          }
+        </mat-select>
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+    }
 
-    <mat-form-field>
-      <mat-label>Huésped</mat-label>
-      <mat-select formControlName="huesped" [compareWith]="compareHuesped">
-        @for (h of $huespedes(); track h.id) {
-          <mat-option [value]="h">{{h.nombre}} {{h.apellido}} - {{h.dni}}</mat-option>
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Habitación</mat-label>
+      <mat-select formControlName="habitacion" [compareWith]="compareObj"
+        (selectionChange)="onHabitacionChange($event.value)">
+        @for (h of $habitaciones(); track h.id) {
+          <mat-option [value]="h">
+            N° {{h.numero}} — {{h.tipoHabitacion?.nombre}} — S/. {{h.precioPorNoche}}/noche
+          </mat-option>
         }
       </mat-select>
-      @if ($f()['huesped'].errors?.['required'] && $f()['huesped'].touched) {
-        <small class="invalid">Seleccione un huésped</small>
-      }
+      <mat-icon matSuffix>bed</mat-icon>
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Fecha de Ingreso</mat-label>
-      <input matInput type="date" formControlName="fechaIngreso">
-      @if ($f()['fechaIngreso'].errors?.['required'] && $f()['fechaIngreso'].touched) {
-        <small class="invalid">La fecha de ingreso es requerida</small>
-      }
-    </mat-form-field>
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Fecha de Ingreso</mat-label>
+        <input matInput [matDatepicker]="pickerIngreso" formControlName="fechaIngreso"
+          readonly>
+        <mat-datepicker-toggle matIconSuffix [for]="pickerIngreso"></mat-datepicker-toggle>
+        <mat-datepicker #pickerIngreso></mat-datepicker>
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Fecha de Salida</mat-label>
-      <input matInput type="date" formControlName="fechaSalida">
-      @if ($f()['fechaSalida'].errors?.['required'] && $f()['fechaSalida'].touched) {
-        <small class="invalid">La fecha de salida es requerida</small>
-      }
-    </mat-form-field>
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Fecha de Salida</mat-label>
+        <input matInput [matDatepicker]="pickerSalida" formControlName="fechaSalida"
+          readonly>
+        <mat-datepicker-toggle matIconSuffix [for]="pickerSalida"></mat-datepicker-toggle>
+        <mat-datepicker #pickerSalida></mat-datepicker>
+      </mat-form-field>
+    </div>
 
-    <mat-form-field>
-      <mat-label>Estado</mat-label>
-      <mat-select formControlName="estado">
-        @for (e of estados; track e) {
-          <mat-option [value]="e">{{e}}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+    @if ($noches() > 0) {
+      <div class="resumen-box">
+        <mat-icon>calculate</mat-icon>
+        <span>
+          <strong>{{$noches()}} noche(s)</strong> ×
+          S/. {{$habitacionSel()?.precioPorNoche ?? 0}} =
+          <strong class="total"> S/. {{$total()}}</strong>
+        </span>
+      </div>
+    }
 
-    <mat-form-field>
+    @if (isAdmin()) {
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="estado">
+          @for (e of estados; track e) {
+            <mat-option [value]="e">{{e}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+
+    <mat-form-field appearance="outline" class="full">
       <mat-label>Observaciones</mat-label>
-      <input matInput formControlName="observaciones">
+      <textarea matInput formControlName="observaciones" rows="2"
+        placeholder="Indicación especial..."></textarea>
     </mat-form-field>
-
-    <button mat-flat-button type="submit" [disabled]="$form().invalid">
-      <mat-icon>done</mat-icon> Guardar
-    </button>
-    <button mat-flat-button type="button" class="cancel-button" (click)="close()">
-      <mat-icon>cancel</mat-icon> Cancelar
-    </button>
 
   </form>
 </mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="close()">
+    <mat-icon>close</mat-icon> Cancelar
+  </button>
+  <button mat-raised-button color="primary" (click)="operate()" [disabled]="$form().invalid">
+    <mat-icon>save</mat-icon> Guardar
+  </button>
+</mat-dialog-actions>

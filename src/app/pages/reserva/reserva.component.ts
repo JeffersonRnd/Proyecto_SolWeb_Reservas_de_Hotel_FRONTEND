@@ -8,9 +8,11 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterOutlet } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { NgClass } from '@angular/common';
 import { switchMap, tap } from 'rxjs';
 import { ReservaDialogComponent } from './reserva-dialog/reserva-dialog.component';
 
@@ -19,8 +21,8 @@ import { ReservaDialogComponent } from './reserva-dialog/reserva-dialog.componen
   imports: [
     MatTableModule, MatFormFieldModule, MatInputModule,
     MatPaginatorModule, MatSortModule, MatButtonModule,
-    MatIconModule, RouterLink, RouterOutlet,
-    MatSnackBarModule, MatDialogModule
+    MatIconModule, MatTooltipModule, RouterOutlet,
+    MatSnackBarModule, MatDialogModule, NgClass
   ],
   templateUrl: './reserva.component.html',
   styleUrl: './reserva.component.css'
@@ -34,15 +36,15 @@ export class ReservaComponent {
   protected $paginator = viewChild(MatPaginator);
   protected $sort = viewChild(MatSort);
   protected $list = this.service.$listChange;
-  protected displayedColumns: string[] = ['id', 'huesped', 'fechaIngreso', 'fechaSalida', 'totalPagar', 'estado', 'actions'];
+  protected displayedColumns = ['id', 'huesped', 'fechaIngreso', 'fechaSalida', 'totalPagar', 'estado', 'actions'];
 
   constructor() {
     this.service.findAll().subscribe(data => this.service.setListChange(data));
     effect(() => {
       const ds = this.$dataSource();
       ds.data = this.$list();
-      ds.paginator = this.$paginator();
-      ds.sort = this.$sort();
+      ds.paginator = this.$paginator() ?? null;
+      ds.sort = this.$sort() ?? null;
     });
     effect(() => {
       const msg = this.service.$messageChange();
@@ -58,15 +60,15 @@ export class ReservaComponent {
   }
 
   openDialog(reserva?: Reserva) {
-    this.dialog.open(ReservaDialogComponent, { width: '700px', data: reserva });
+    this.dialog.open(ReservaDialogComponent, { width: '560px', data: reserva ?? null });
   }
 
   delete(id: number) {
-    if (window.confirm('¿Está seguro de eliminar esta reserva?')) {
+    if (window.confirm('¿Eliminar esta reserva?')) {
       this.service.delete(id).pipe(
         switchMap(() => this.service.findAll()),
         tap(data => this.service.setListChange(data)),
-        tap(() => this.service.setMessageChange('ELIMINADO'))
+        tap(() => this.service.setMessageChange('Reserva eliminada'))
       ).subscribe();
     }
   }

@@ -1,3 +1,8 @@
-.example-container { display: flex; flex-direction: column; max-width: 500px; margin: 20px auto; gap: 8px; }
-.example-container > * { width: 100%; }
-.invalid { color: red; font-size: 12px; }
+.edit-container { padding: 24px; max-width: 640px; }
+.edit-header { margin-bottom: 24px; }
+.page-title { display: flex; align-items: center; gap: 8px; color: #1a237e; margin: 0; }
+.edit-form { display: flex; flex-direction: column; gap: 8px; }
+.form-row { display: flex; gap: 16px; }
+.half { flex: 1; }
+.full { width: 100%; }
+.btn-row { display: flex; gap: 12px; margin-top: 8px; }
